@@ -1,11 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App, { generateCoordinateValidator, generateMineFieldObjects } from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App, { MineCell, generateCoordinateValidator, generateMineFieldObjects } from './App'
+import { shallow } from 'enzyme'
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-});
+  const div = document.createElement('div')
+  ReactDOM.render(<App />, div)
+})
 
 describe('#generateCoordinateValidator', () => {
   const validateCoordinate = generateCoordinateValidator(3, 3)
@@ -39,8 +40,8 @@ describe('#generateMineFieldObjects', () => {
       [0,1],
     ]
     const expectedObjects = [
-      [{bombsNearby: 0, isBomb: 1, isHidden: true},{bombsNearby: 2, isBomb: 0, isHidden: true}],
-      [{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 1, isHidden: true}],
+      [{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false}],
+      [{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false}],
     ]
 
     expect(generateMineFieldObjects(testMineFieldBitMap)).toEqual(expectedObjects)
@@ -54,13 +55,27 @@ describe('#generateMineFieldObjects', () => {
       [0,0,0,0,0],
     ]
     const expectedObjects = [
-      [{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 0, isHidden: true}],
-      [{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 1, isHidden: true},{bombsNearby: 0, isBomb: 1, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 0, isHidden: true}],
-      [{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 1, isHidden: true},{bombsNearby: 4, isBomb: 0, isHidden: true},{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true}],
-      [{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 2, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 1, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true}],
-      [{bombsNearby: 0, isBomb: 0, isHidden: true},{bombsNearby: 0, isBomb: 0, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true},{bombsNearby: 1, isBomb: 0, isHidden: true}],
+      [{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false}],
+      [{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false}],
+      [{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 4, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false}],
+      [{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false}],
+      [{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false}],
     ]
 
     expect(generateMineFieldObjects(testMineFieldBitMap)).toEqual(expectedObjects)
+  })
+})
+
+describe('#MineCell', () => {
+  const props = {
+    cell: {},
+    revealCell: () => () => {},
+    rowIndex: 0,
+    columnIndex: 0,
+  }
+  it('renders a flag icon when isFlagged and isHidden', () => {
+    const rendered = shallow(<MineCell {...props} cell={{ isHidden: true, isFlagged: true }} />)
+
+    expect(rendered.find('.fa-flag').length).toEqual(1)
   })
 })

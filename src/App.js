@@ -50,7 +50,7 @@ export const generateMineFieldObjects = (mineFieldBitMap) => {
           return totalBombs + mineFieldBitMap[rowProbeIndex][columnProbeIndex]
         }, 0)
       }
-      mineFieldObjectsRow.push({bombsNearby, isBomb, isHidden: true})
+      mineFieldObjectsRow.push({bombsNearby, isBomb, isHidden: true, isFlagged: false})
     })
 
     mineFieldObjects.push(mineFieldObjectsRow)
@@ -87,10 +87,10 @@ const MineRow = ({row, rowIndex, revealCell}) => {
   )
 }
 
-const MineCell = ({cell, revealCell, rowIndex, columnIndex}) => {
+export const MineCell = ({cell, revealCell, rowIndex, columnIndex}) => {
   return (
     <div onClick={revealCell(rowIndex, columnIndex)} className={`mineCell ${cell.isHidden ? "hidden" : "revealed"}`}>
-      {cell.isHidden ? '' : (cell.bombsNearby ? cell.bombsNearby : <i className="fa fa-bomb" aria-hidden="true"></i>)}
+      {cell.isHidden ? (cell.isFlagged  ? <i className="fa fa-flag" aria-hidden="true"></i> : '') : (cell.bombsNearby ? cell.bombsNearby : <i className="fa fa-bomb" aria-hidden="true"></i>)}
     </div>
   )
 }
