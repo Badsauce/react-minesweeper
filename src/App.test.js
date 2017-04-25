@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App, { MineCell, generateCoordinateValidator, generateMineFieldObjects } from './App'
 import { shallow } from 'enzyme'
+
+import App, { MineCell, generateCoordinateValidator, generateMineFieldObjects } from './App'
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
