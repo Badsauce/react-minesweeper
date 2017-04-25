@@ -12,55 +12,55 @@ it('renders without crashing', () => {
 describe('#generateCoordinateValidator', () => {
   const validateCoordinate = generateCoordinateValidator(3, 3)
   it('detects underflowed y', () => {
-    expect(validateCoordinate(-1,1)).toEqual(false)
+    expect(validateCoordinate(-1, 1)).toEqual(false)
   })
   it('detects underflowed x', () => {
-    expect(validateCoordinate(1,-1)).toEqual(false)
+    expect(validateCoordinate(1, -1)).toEqual(false)
   })
   it('detects underflowed x & y', () => {
-    expect(validateCoordinate(-1,-1)).toEqual(false)
+    expect(validateCoordinate(-1, -1)).toEqual(false)
   })
   it('detects overflowed y', () => {
-    expect(validateCoordinate(4,1)).toEqual(false)
+    expect(validateCoordinate(4, 1)).toEqual(false)
   })
   it('detects overflowed x', () => {
-    expect(validateCoordinate(1,4)).toEqual(false)
+    expect(validateCoordinate(1, 4)).toEqual(false)
   })
   it('detects overflowed x & y', () => {
-    expect(validateCoordinate(4,4)).toEqual(false)
+    expect(validateCoordinate(4, 4)).toEqual(false)
   })
   it('succeeds on inbounds coordinate', () => {
-    expect(validateCoordinate(2,2)).toEqual(true)
+    expect(validateCoordinate(2, 2)).toEqual(true)
   })
 })
 
 describe('#generateMineFieldObjects', () => {
   it('generates a correct 2x2', () => {
     const testMineFieldBitMap = [
-      [1,0],
-      [0,1],
+      [1, 0],
+      [0, 1],
     ]
     const expectedObjects = [
-      [{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false}],
-      [{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false}],
+      [{ bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false }, { bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }],
+      [{ bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false }],
     ]
 
     expect(generateMineFieldObjects(testMineFieldBitMap)).toEqual(expectedObjects)
   })
   it('generates a correct 5x5', () => {
     const testMineFieldBitMap = [
-      [0,0,0,0,0],
-      [0,1,1,0,0],
-      [0,1,0,0,0],
-      [0,0,0,1,0],
-      [0,0,0,0,0],
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 0, 0],
+      [0, 1, 0, 0, 0],
+      [0, 0, 0, 1, 0],
+      [0, 0, 0, 0, 0],
     ]
     const expectedObjects = [
-      [{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false}],
-      [{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false}],
-      [{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 4, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false}],
-      [{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false}],
-      [{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false},{bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false}],
+      [{ bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false }], // eslint-disable-line max-len
+      [{ bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false }], // eslint-disable-line max-len
+      [{ bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false }, { bombsNearby: 4, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }], // eslint-disable-line max-len
+      [{ bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 2, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 1, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }], // eslint-disable-line max-len
+      [{ bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 0, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }, { bombsNearby: 1, isBomb: 0, isHidden: true, isFlagged: false }], // eslint-disable-line max-len
     ]
 
     expect(generateMineFieldObjects(testMineFieldBitMap)).toEqual(expectedObjects)

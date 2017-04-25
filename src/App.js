@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './App.css'
 
 // {rowMovement, columnMovement}
@@ -77,20 +78,30 @@ class App extends Component {
   }
 }
 
-const MineRow = ({ row, rowIndex, revealCell }) => {
-  return (
-    <div className="mineRow">
-      {row.map((cell, index) => <MineCell cell={cell} key={index} revealCell={revealCell} rowIndex={rowIndex} columnIndex={index} />)}
-    </div>
-  )
+const MineRow = ({ row, rowIndex, revealCell }) => (
+  <div className="mineRow">
+    {row.map((cell, index) => <MineCell cell={cell} key={index} revealCell={revealCell} rowIndex={rowIndex} columnIndex={index} />)}
+  </div>
+)
+
+
+MineRow.propTypes = {
+  row: PropTypes.array,
+  rowIndex: PropTypes.number,
+  revealCell: PropTypes.func,
 }
 
-export const MineCell = ({ cell, revealCell, rowIndex, columnIndex }) => {
-  return (
-    <div onClick={revealCell(rowIndex, columnIndex)} className={`mineCell ${cell.isHidden ? "hidden" : "revealed"}`}>
-      {cell.isHidden ? (cell.isFlagged  ? <i className="fa fa-flag" aria-hidden="true"></i> : '') : (cell.bombsNearby ? cell.bombsNearby : <i className="fa fa-bomb" aria-hidden="true"></i>)}
-    </div>
-  )
+export const MineCell = ({ cell, revealCell, rowIndex, columnIndex }) => (
+  <button onClick={revealCell(rowIndex, columnIndex)} className={`mineCell ${cell.isHidden ? 'hidden' : 'revealed'}`}>
+    {cell.isHidden ? (cell.isFlagged ? <i className="fa fa-flag" aria-hidden="true" /> : '') : (cell.bombsNearby ? cell.bombsNearby : <i className="fa fa-bomb" aria-hidden="true" />)}
+  </button>
+)
+
+MineCell.propTypes = {
+  cell: PropTypes.obj,
+  revealCell: PropTypes.func,
+  rowIndex: PropTypes.number,
+  columnIndex: PropTypes.number,
 }
 
 export default App

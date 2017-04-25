@@ -1,7 +1,8 @@
 module.exports = {
     "env": {
         "browser": true,
-        "commonjs": true
+        "commonjs": true,
+        "jest": true,
     },
     "extends": "airbnb",
     "parser": "babel-eslint",
@@ -17,7 +18,8 @@ module.exports = {
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "max-len": [2, 180, 4],
+        "max-len": [2, 200, 4],
+        "react/no-array-index-key": 0,
         "indent": [
             "error",
         ],
